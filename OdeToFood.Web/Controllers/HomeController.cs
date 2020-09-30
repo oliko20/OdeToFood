@@ -5,10 +5,10 @@ namespace OdeToFood.Web.Controllers
 {
     public class HomeController : Controller
     {
-        IRestaurantData db;
-        public HomeController()
+        readonly IRestaurantData db;
+        public HomeController(IRestaurantData data)
         {
-            db = new InMemoryRestaurantData();
+            db = data;
         }
         public ActionResult Index()
         {
