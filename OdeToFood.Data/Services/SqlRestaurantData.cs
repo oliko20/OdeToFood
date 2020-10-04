@@ -15,7 +15,7 @@ namespace OdeToFood.Data.Services
 
         public void Add(Restaurant restaurant)
         {
-            OdeToFoodDbContext.Add(restaurant);
+            OdeToFoodDbContext.Restaurants.Add(restaurant);
             OdeToFoodDbContext.SaveChanges();
         }
 
@@ -33,6 +33,13 @@ namespace OdeToFood.Data.Services
         {
             var r = Get(restaurant.Id);
             r.Name = restaurant.Name;
+            OdeToFoodDbContext.SaveChanges();
+        }
+
+        public void Delete(int id)
+        {
+            var restaurant = OdeToFoodDbContext.Restaurants.Find(id);
+            OdeToFoodDbContext.Restaurants.Remove(restaurant);
             OdeToFoodDbContext.SaveChanges();
         }
     }

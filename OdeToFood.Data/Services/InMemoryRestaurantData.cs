@@ -40,5 +40,14 @@ namespace OdeToFood.Data.Services
                 existing.Id = restaurant.Id;
             }
         }
+
+        public void Delete(int id)
+        {
+            var restaurant = Get(id);
+            if (restaurant != null)
+            {
+                Restaurants.Remove(restaurant);
+            }
+        }
     }
 }

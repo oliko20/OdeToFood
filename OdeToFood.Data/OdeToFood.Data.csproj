@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac.Mvc5" Version="6.0.0" />
-    <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="EntityFramework" Version="6.2.0" />
   </ItemGroup>
 
   <ItemGroup>
