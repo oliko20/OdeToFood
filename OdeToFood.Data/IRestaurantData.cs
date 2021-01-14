@@ -1,16 +1,18 @@
 ﻿using OdeToFood.Core;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace OdeToFood.Data
 {
     public interface IRestaurantData
     {
-        IEnumerable<Restaurant> GetAll();
+        IEnumerable<Restaurant> GetRestaurantsByName(string name);
+        Restaurant GetById(int id);
 
     }
     public class InMemoryRestaurantData : IRestaurantData
     {
-        List<Restaurant> restaurants;
+        private readonly List<Restaurant> restaurants;
         public InMemoryRestaurantData()
         {
             restaurants = new List<Restaurant>
@@ -19,9 +21,17 @@ namespace OdeToFood.Data
                 new Restaurant {Id = 2, Name = "Res2", Location = "Borjomi", Cuisine = CuisineType.Italian}
             };
         }
-        public IEnumerable<Restaurant> GetAll()
+
+        public Restaurant GetById(int id)
         {
-            return restaurants;
+            return restaurants.SingleOrDefault(s => s.Id == id);
+        }
+
+        public IEnumerable<Restaurant> GetRestaurantsByName(string name = null)
+        {
+            return from r in restaurants
+                   where string.IsNullOrWhiteSpace(name) || r.Name.StartsWith(name)
+                   select r;
         }
     }
 }
