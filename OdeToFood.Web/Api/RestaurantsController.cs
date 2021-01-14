@@ -14,7 +14,8 @@ namespace OdeToFood.Web.Api
             RestaurantsData = restaurantsData;
         }
         public IEnumerable<Restaurant> Get()
-        { var model = RestaurantsData.GetAll();
+        {
+            var model = RestaurantsData.GetAll();
             return model;
         }
     }
