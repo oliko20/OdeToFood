@@ -1,4 +1,5 @@
-﻿using OdeToFood.Core;
+﻿using Microsoft.AspNetCore.Mvc;
+using OdeToFood.Core;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,7 +9,9 @@ namespace OdeToFood.Data
     {
         IEnumerable<Restaurant> GetRestaurantsByName(string name);
         Restaurant GetById(int id);
-
+        Restaurant Update(Restaurant updateRestaurant);
+        Restaurant Add(Restaurant restaurant);
+        int Commit();
     }
     public class InMemoryRestaurantData : IRestaurantData
     {
@@ -22,6 +25,18 @@ namespace OdeToFood.Data
             };
         }
 
+        public Restaurant Add(Restaurant restaurant)
+        {
+            restaurants.Add(restaurant);
+            restaurant.Id = restaurants.Max(r => r.Id) + 1;
+            return restaurant;
+        }
+
+        public int Commit()
+        {
+            return 0;
+        }
+
         public Restaurant GetById(int id)
         {
             return restaurants.SingleOrDefault(s => s.Id == id);
@@ -33,5 +48,18 @@ namespace OdeToFood.Data
                    where string.IsNullOrWhiteSpace(name) || r.Name.StartsWith(name)
                    select r;
         }
+
+        public Restaurant Update(Restaurant updateRestaurant)
+        {
+            var restaurant = restaurants.SingleOrDefault(s => s.Id == updateRestaurant.Id);
+            if (restaurant != null)
+            {
+                restaurant.Name = updateRestaurant.Name;
+                restaurant.Cuisine = updateRestaurant.Cuisine;
+                restaurant.Location = updateRestaurant.Location;
+            }
+            return restaurant;
+        }
+
     }
 }
